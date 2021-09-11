@@ -18,6 +18,7 @@ public class Calculator {
     private JButton button0;
     private JButton Period;
     private JTextArea Inputnumber;
+    private JButton button1;
 
     public Calculator() {
         Button1.addActionListener(new ActionListener() {
