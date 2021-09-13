@@ -21,7 +21,7 @@ double  e =  Math.pow(a, d) ;
 
 
 
-System.out.println("The Floor is : " + e);
+System.out.println("The function is : " + e);
 	}
 
 }
