@@ -18,9 +18,40 @@ public class Calculator {
     private JButton button0;
     private JButton Period;
     private JTextArea Inputnumber;
+    private JButton FLR;
+    private JLabel Preview;
     private JButton button1;
+    private JButton button10;
 
     public Calculator() {
+
+        PlussOrMinus.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Inputnumber.setText(Inputnumber.getText());
+                if (Inputnumber.getText().indexOf("-") >=0) {
+                    System.out.println("if condition work\t\t"+ Inputnumber.getText().indexOf("-") );
+                    Inputnumber.setText( Inputnumber.getText().substring(1));
+                } else {
+                    System.out.println("else work \t\t\t"+ Inputnumber.getText().indexOf("-") );
+                    Inputnumber.setText("-" + Inputnumber.getText());
+                }
+            }
+        });
+        Period.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (Inputnumber.getText().indexOf(".") <0){
+                    Inputnumber.setText(Inputnumber.getText() + ".");
+                }
+            }
+        });
+        button0.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Inputnumber.setText(Inputnumber.getText() + "0");
+            }
+        });
         Button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
