@@ -20,11 +20,36 @@ public class Calculator {
     private JTextArea Inputnumber;
     private JButton FLR;
     private JLabel Preview;
-    private JButton button1;
-    private JButton button10;
+    private JButton CEIL;
+    private JButton factorial;
+    private JButton modulo;
+    private JButton SQRT;
+    private JButton CBRT;
+    private JButton button12;
+    private JButton Pi;
+    private JButton Raise;
+    private JButton button15;
+    private JButton button16;
+    private JButton button17;
+    private JButton NestedPi;
+    private JButton NestedSigma;
+    private JButton button20;
 
     public Calculator() {
-
+        SQRT.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Double input = Double.parseDouble(Inputnumber.getText());
+                Inputnumber.setText(String.valueOf(Math.sqrt(input)));
+            }
+        });
+        CBRT.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Double input = Double.parseDouble(Inputnumber.getText());
+                Inputnumber.setText(String.valueOf(Math.cbrt(input)));
+            }
+        });
         PlussOrMinus.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -44,6 +69,12 @@ public class Calculator {
                 if (Inputnumber.getText().indexOf(".") <0){
                     Inputnumber.setText(Inputnumber.getText() + ".");
                 }
+            }
+        });
+        factorial.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Inputnumber.setText(Inputnumber.getText() + "0");
             }
         });
         button0.addActionListener(new ActionListener() {
