@@ -122,7 +122,8 @@ public class Calculator {
                     Preview.setText(Preview.getText() + Inputnumber.getText() +"!");
                     Inputnumber.setText(String.valueOf(output));
                 }else if (Preview.getText().indexOf("^",Preview.getText().indexOf("^")+1) >= 0){//nested power
-                    double output = Math.pow(Double.parseDouble(Preview.getText().substring(0,Preview.getText().indexOf("^"))),Double.parseDouble(Preview.getText()));
+                    double secondnum = Double.parseDouble(Preview.getText().substring(Preview.getText().indexOf("^"),Preview.getText().indexOf("^")));
+                    double output = Math.pow(secondnum,Double.parseDouble(Preview.getText()));
                     output = Math.pow(output,Double.parseDouble(Preview.getText()));
                     Preview.setText(Preview.getText() + Inputnumber.getText() );
                     Inputnumber.setText(String.valueOf(output));
@@ -137,6 +138,22 @@ public class Calculator {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Preview.setText(Inputnumber.getText() + "^" );
+                Inputnumber.setText("");
+            }
+        });
+        raiseraise.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (Preview.getText().contains("x^y^z") == false){
+                    Preview.setText( "x^y^z");
+                }
+                if (Preview.getText().indexOf("x") >= 0 ){
+                    Preview.setText(Preview.getText().replace("x",Inputnumber.getText()));
+                }else if (Preview.getText().indexOf("y") >= 0){
+                    Preview.setText(Preview.getText().replace("y",Inputnumber.getText()));
+                }else if (Preview.getText().indexOf("z") >= 0){
+                    Preview.setText(Preview.getText().replace("z",Inputnumber.getText()));
+                }
                 Inputnumber.setText("");
             }
         });
