@@ -1,3 +1,5 @@
+import Method_Collection.Methods;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -41,20 +43,157 @@ public class Calculator {
     private JTextArea SigmaInputB;
     private JPanel SigmaPanel;
     private JTextArea SigmaInputEQ;
-    private JButton xYZButton;
+    private JButton raiseraise;
     private JLabel SigmaA;
     private JLabel SigmaB;
     private JLabel SigmaC;
+    private JButton INTButton;
+    private JButton DivideInt;
+    private JButton log2XButton;
+    private JButton logXButton;
+    private JButton aFPlusBFButton;
+    private JButton aFDivideBFButton1;
+    private JButton pNRButton;
+    private JButton nCrButton;
 
 
     public Calculator() {
         SigmaPanel.setVisible(false);
+        Substraction.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Preview.setText(Inputnumber.getText() + " - ");
+                Inputnumber.setText("");
+            }
+        });
+        DivideInt.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Preview.setText(Inputnumber.getText() + " // ");
+                Inputnumber.setText("");
+            }
+        });
+        INTButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (Inputnumber.getText().length() > 0) {
+                    int intF = (int) Double.parseDouble(Inputnumber.getText());
+                    Preview.setText("Int(" + Inputnumber.getText() + ")");
+                    Inputnumber.setText(String.valueOf(intF));
+                }
+
+            }
+        });
         Equals.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (SigmaPanel.isVisible() == true){
 
+                }else if (Preview.getText().indexOf("%") >= 0){//modulo
+                    double output = Double.parseDouble(Preview.getText().substring(0,Preview.getText().indexOf(" "))) % Integer.parseInt(Inputnumber.getText());
+                    Preview.setText(Preview.getText()+ " " + Inputnumber.getText());
+                    Inputnumber.setText(String.valueOf((int) output));
+                }else if (Preview.getText().indexOf("//") >= 0){//divideInte
+                    int DivideInteger = (int) (Double.parseDouble(Preview.getText().substring(0,Preview.getText().indexOf(" //")))/Double.parseDouble(Inputnumber.getText()));
+                    Preview.setText(Preview.getText() + Inputnumber.getText());
+                    Inputnumber.setText(String.valueOf(DivideInteger));
+                }else if (Preview.getText().indexOf(" - ") >= 0){//subtraction
+                    double output = Double.parseDouble(Preview.getText().substring(0,Preview.getText().indexOf(" - "))) - Double.parseDouble(Inputnumber.getText());
+                    Preview.setText(Preview.getText() + Inputnumber.getText());
+                    Inputnumber.setText(String.valueOf(output));
+                }else if (Preview.getText().indexOf(" + ") >= 0){//addition
+                    double output = Double.parseDouble(Preview.getText().substring(0,Preview.getText().indexOf(" + "))) + Double.parseDouble(Inputnumber.getText());
+                    Preview.setText(Preview.getText() + Inputnumber.getText());
+                    Inputnumber.setText(String.valueOf(output));
+                }else if (Preview.getText().indexOf(" / ") >= 0){//divide
+                    double output = Double.parseDouble(Preview.getText().substring(0,Preview.getText().indexOf(" / "))) / Double.parseDouble(Inputnumber.getText());
+                    Preview.setText(Preview.getText() + Inputnumber.getText());
+                    Inputnumber.setText(String.valueOf(output));
+                }else if (Preview.getText().indexOf(" * ") >= 0){//multiply
+                    double output = Double.parseDouble(Preview.getText().substring(0,Preview.getText().indexOf(" * "))) * Double.parseDouble(Inputnumber.getText());
+                    Preview.setText(Preview.getText() + Inputnumber.getText());
+                    Inputnumber.setText(String.valueOf(output));
+                }else if (Preview.getText().indexOf("!+") >= 0){//factorial and addition
+                    double output = Methods.Factorial(Double.parseDouble(Preview.getText().substring(0,Preview.getText().indexOf("!")))) + Methods.Factorial(Double.parseDouble(Inputnumber.getText()));
+                    Preview.setText(Preview.getText() + Inputnumber.getText() +"!");
+                    Inputnumber.setText(String.valueOf(output));
+                }else if (Preview.getText().indexOf("!/") >= 0){//factorial and divide
+                    double output = Methods.Factorial(Double.parseDouble(Preview.getText().substring(0,Preview.getText().indexOf("!")))) / Methods.Factorial(Double.parseDouble(Inputnumber.getText()));
+                    Preview.setText(Preview.getText() + Inputnumber.getText() +"!");
+                    Inputnumber.setText(String.valueOf(output));
+                }else if (Preview.getText().indexOf("^",Preview.getText().indexOf("^")+1) >= 0){//nested power
+                    double output = Math.pow(Double.parseDouble(Preview.getText().substring(0,Preview.getText().indexOf("^"))),Double.parseDouble(Preview.getText()));
+                    output = Math.pow(output,Double.parseDouble(Preview.getText()));
+                    Preview.setText(Preview.getText() + Inputnumber.getText() );
+                    Inputnumber.setText(String.valueOf(output));
+                }else if (Preview.getText().indexOf("^") >= 0){//power or raise
+                    double output = Math.pow(Double.parseDouble(Preview.getText().substring(0,Preview.getText().indexOf("^"))),Double.parseDouble(Preview.getText()));
+                    Preview.setText(Preview.getText() + Inputnumber.getText() );
+                    Inputnumber.setText(String.valueOf(output));
                 }
+            }
+        });
+        Raise.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Preview.setText(Inputnumber.getText() + "^" );
+                Inputnumber.setText("");
+            }
+        });
+        aFDivideBFButton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Preview.setText(Inputnumber.getText() + "!/" );
+                Inputnumber.setText("");
+            }
+        });
+        aFPlusBFButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Preview.setText(Inputnumber.getText() + "!+" );
+                Inputnumber.setText("");
+            }
+        });
+        logXButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (Inputnumber.getText().length() > 0) {
+                    double output =  Math.log10(Double.parseDouble(Inputnumber.getText()));
+                    Preview.setText( "log("+ Inputnumber.getText() + ")");
+                    Inputnumber.setText(String.valueOf(output));
+                }
+
+            }
+        });
+        log2XButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (Inputnumber.getText().length() > 0) {
+                    double output =  (Math.log(Double.parseDouble(Inputnumber.getText()))/Math.log(2));
+                    Preview.setText( "log2("+ Inputnumber.getText() + ")");
+                    Inputnumber.setText(String.valueOf(output));
+                }
+            }
+        });
+        addition.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Preview.setText(Inputnumber.getText() + " + ");
+                Inputnumber.setText("");
+            }
+        });
+        Multiply.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Preview.setText(Inputnumber.getText() + " * ");
+                Inputnumber.setText("");
+            }
+        });
+        Division.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Preview.setText(Inputnumber.getText() + " / ");
+                Inputnumber.setText("");
             }
         });
         AllClear.addActionListener(new ActionListener() {
@@ -79,7 +218,7 @@ public class Calculator {
                 if (Inputnumber.getText().length() > 0) {
                     Double input = Double.parseDouble(Inputnumber.getText());
                     Inputnumber.setText("");
-                    Preview.setText(String.valueOf(input) + "%");
+                    Preview.setText(String.valueOf(input) + " %");
                 }
             }
         });
@@ -153,7 +292,12 @@ public class Calculator {
         factorial.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Inputnumber.setText(Inputnumber.getText() + "0");
+                if (Inputnumber.getText().length() > 0) {
+                    double output = Methods.Factorial(Double.parseDouble(Inputnumber.getText()));
+                    Preview.setText( Inputnumber.getText() + "!");
+                    Inputnumber.setText(String.valueOf(output));
+                }
+
             }
         });
         button0.addActionListener(new ActionListener() {
@@ -225,4 +369,5 @@ public class Calculator {
         frame.pack();
         frame.setVisible(true);
     }
+
 }
