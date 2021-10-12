@@ -134,4 +134,20 @@ public class Methods {
     public static double Combination(double n, double r){
         return Factorial(n)/(Factorial(r)*Factorial(n-r));
     }
+    public static double Probabilitycard(double heart, double Facecard, double heartsFacecard){
+        double min = Facecard - heartsFacecard;
+        double fraction1 = heart / 52;
+        double fraction2 = min / 52;
+        double proba = fraction1 + fraction2;
+        return proba;
+    }
+    public static double Dice(double firstdice, double secDice) {
+        double sum = 0;
+        for (int i = 1; i < firstdice; i++) {
+            for (int j = 1; j < secDice; j++) {
+                sum = i + j;
+            }
+        }
+        return sum / 36;
+    }
 }

@@ -58,6 +58,8 @@ public class Calculator {
     private JButton NestedSigmaXRaiseYButton;
     private JButton NestedPiXRaiseYButton;
     private JButton SigmaYRaiseXButton;
+    private JButton probabilityButton;
+    private JButton probabilityDiceButton;
 
     public Calculator() {
         Substraction.addActionListener(new ActionListener() {
@@ -121,11 +123,27 @@ public class Calculator {
                     Preview.setText(Preview.getText() + Inputnumber.getText() + "!");
                     Inputnumber.setText(String.valueOf(output));
                 } else if (Preview.getText().indexOf("^", Preview.getText().indexOf("^") + 1) >= 0) {// nested power
-                    double secondnum = Double.parseDouble(Preview.getText().substring(Preview.getText().indexOf("^") + 1, Preview.getText().indexOf("^", Preview.getText().indexOf("^") + 1)));
-                    double output = Math.pow(secondnum, Double.parseDouble(Inputnumber.getText()));
-                    output = Math.pow(Double.parseDouble(Preview.getText().substring(0, Preview.getText().indexOf("^"))), output);
-                    Preview.setText(Preview.getText().replace("z", Inputnumber.getText()));
-                    Inputnumber.setText(String.valueOf((int)output));
+                    String StrPreview = Preview.getText();
+                    if (StrPreview.contains("x") ==true || StrPreview.contains("y") ==true || StrPreview.contains("z") ==true ) {
+                        if (Preview.getText().indexOf("x") >= 0) {
+                            Preview.setText(Preview.getText().replace("x", Inputnumber.getText()));
+                        } else if (Preview.getText().indexOf("y") >= 0) {
+                            Preview.setText(Preview.getText().replace("y", Inputnumber.getText()));
+                        } else if (Preview.getText().indexOf("z") >= 0) {
+                            Preview.setText(Preview.getText().replace("z", Inputnumber.getText()));
+                        }
+                    }
+                    Inputnumber.setText("");
+                    StrPreview = Preview.getText();
+                    if (StrPreview.contains("x") ==false && StrPreview.contains("y") ==false && StrPreview.contains("z") ==false ) {
+                        String test = Preview.getText();
+                        double secondnum = Double.parseDouble(Preview.getText().substring(Preview.getText().indexOf("^") + 1, Preview.getText().indexOf("^", Preview.getText().indexOf("^") + 1)));
+                        Double Thirdnum = Double.parseDouble(test.substring(test.indexOf("^", test.indexOf("^") + 1) + 1));
+                        double output = Math.pow(secondnum,Thirdnum );
+                        output = Math.pow(Double.parseDouble(Preview.getText().substring(0, Preview.getText().indexOf("^"))), output);
+                        Preview.setText(Preview.getText().replace("z", Inputnumber.getText()));
+                        Inputnumber.setText(String.valueOf((int) output));
+                    }
                 } else if (Preview.getText().contains(" ∑x+y") == true) {// ∑x+y
                     String StrPreview = Preview.getText();
                     if (StrPreview.contains(" a ") ==true || StrPreview.contains(" b ") ==true || StrPreview.contains(" y ") ==true ) {
@@ -425,11 +443,79 @@ public class Calculator {
                         double r = Double.parseDouble(Preview.getText().substring(Preview.getText().indexOf("C")+1));
                         Inputnumber.setText(String.valueOf(Methods.Combination(n,r)));
                     }
+                }else if (Preview.getText().contains(" Proba") == true) {// ΠΠx^y
+                    String StrPreview = Preview.getText();
+                    if (StrPreview.contains(" a ") ==true || StrPreview.contains(" b ") ==true || StrPreview.contains(" c ") ==true  ) {
+                        if (Preview.getText().contains(" a ") == true){
+                            Preview.setText(Preview.getText().replace(" a ",Inputnumber.getText()));
+                        }else if (Preview.getText().contains(" b ") == true){
+                            Preview.setText(Preview.getText().replace(" b ",Inputnumber.getText()));
+                        }else if (Preview.getText().contains(" c ") == true){
+                            Preview.setText(Preview.getText().replace(" c ",Inputnumber.getText()));
+                        }
+                        Inputnumber.setText("");
+                    }
+                    StrPreview = Preview.getText();
+                    if (StrPreview.contains(" a ") ==false && StrPreview.contains(" b ") ==false && StrPreview.contains(" c ") ==false ){
+                        double a = Double.parseDouble(Preview.getText().substring(Preview.getText().indexOf("(")+1,Preview.getText().indexOf(",")));
+                        double b = Double.parseDouble(Preview.getText().substring(Preview.getText().indexOf(",")+1,Preview.getText().indexOf(",",Preview.getText().indexOf(",")+1)));
+                        double c = Double.parseDouble(Preview.getText().substring(Preview.getText().indexOf(",",Preview.getText().indexOf(",")+1)+1,Preview.getText().indexOf(")")));
+                        Inputnumber.setText(String.valueOf(Methods.Probabilitycard(a,b,c)));
+                    }
+                }else if (Preview.getText().contains(" ProbDice") == true) {// ΠΠx^y
+                    String StrPreview = Preview.getText();
+                    if (StrPreview.contains(" a ") ==true || StrPreview.contains(" b ") ==true ) {
+                        if (Preview.getText().contains(" a ") == true){
+                            Preview.setText(Preview.getText().replace(" a ",Inputnumber.getText()));
+                        }else if (Preview.getText().contains(" b ") == true){
+                            Preview.setText(Preview.getText().replace(" b ",Inputnumber.getText()));
+                        }
+                        Inputnumber.setText("");
+                    }
+                    StrPreview = Preview.getText();
+                    if (StrPreview.contains(" a ") ==false && StrPreview.contains(" b ") ==false && StrPreview.contains(" c ") ==false ){
+                        double a = Double.parseDouble(Preview.getText().substring(Preview.getText().indexOf("(")+1,Preview.getText().indexOf(",")));
+                        double b = Double.parseDouble(Preview.getText().substring(Preview.getText().indexOf(",")+1,Preview.getText().indexOf(")")));
+                        double output = Methods.Dice(a,b);
+                        Inputnumber.setText(String.valueOf(output) + " or " + String.format("%.3f", output));
+                    }
                 }else if (Preview.getText().indexOf("^") >= 0) {// power or raise
                     double output = Math.pow(Double.parseDouble(Preview.getText().substring(0, Preview.getText().indexOf("^"))), Double.parseDouble(Inputnumber.getText()));
                     Preview.setText(Preview.getText() + Inputnumber.getText());
                     Inputnumber.setText(String.valueOf(output));
                 }
+            }
+        });
+        probabilityDiceButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (Preview.getText().contains(" ProbDice")==false){
+                    Preview.setText(" ProbDice( a , b )");
+                }if (Inputnumber.getText().length() >0){
+                    if (Preview.getText().contains(" a ") == true){
+                        Preview.setText(Preview.getText().replace(" a ",Inputnumber.getText()));
+                    }else if (Preview.getText().contains(" b ") == true){
+                        Preview.setText(Preview.getText().replace(" b ",Inputnumber.getText()));
+                    }
+                }
+                Inputnumber.setText("");
+            }
+        });
+        probabilityButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (Preview.getText().contains(" Proba")==false){
+                    Preview.setText(" Proba( a , b , c )");
+                }if (Inputnumber.getText().length() >0){
+                    if (Preview.getText().contains(" a ") == true){
+                        Preview.setText(Preview.getText().replace(" a ",Inputnumber.getText()));
+                    }else if (Preview.getText().contains(" b ") == true){
+                        Preview.setText(Preview.getText().replace(" b ",Inputnumber.getText()));
+                    }else if (Preview.getText().contains(" c ") == true){
+                        Preview.setText(Preview.getText().replace(" c ",Inputnumber.getText()));
+                    }
+                }
+                Inputnumber.setText("");
             }
         });
         CombinationButton.addActionListener(new ActionListener() {
