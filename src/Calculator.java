@@ -91,9 +91,9 @@ public class Calculator {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (Preview.getText().indexOf("%") >= 0) {// modulo
-                    double output = Double.parseDouble(Preview.getText().substring(0, Preview.getText().indexOf(" "))) % Integer.parseInt(Inputnumber.getText());
+                    double output = Double.parseDouble(Preview.getText().substring(0, Preview.getText().indexOf(" "))) % Double.parseDouble(Inputnumber.getText());
                     Preview.setText(Preview.getText() + " " + Inputnumber.getText());
-                    Inputnumber.setText(String.valueOf((int) output));
+                    Inputnumber.setText(String.valueOf(output));
                 } else if (Preview.getText().indexOf("//") >= 0) {// divideInte
                     int DivideInteger = (int) (Double.parseDouble(Preview.getText().substring(0, Preview.getText().indexOf(" //"))) / Double.parseDouble(Inputnumber.getText()));
                     Preview.setText(Preview.getText() + Inputnumber.getText());
